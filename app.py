@@ -55,28 +55,29 @@ if "Product_Category" in df.columns:
         filtered_df["Product_Category"].isin(categories)
     ]
 
-# Summary metrics
-col1, col2, col3 = st.columns(3)
+
+# Summary Metrics
+col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("Total Records", f"{len(filtered_df):,}")
 
-if "Customer_ID" in filtered_df.columns:
-    col2.metric(
-        "Unique Customers",
-        f"{filtered_df['Customer_ID'].nunique():,}"
-    )
-else:
-    col2.metric("Columns", len(filtered_df.columns))
+col2.metric(
+    "Unique Customers",
+    f"{filtered_df['Customer_ID'].nunique():,}"
+)
 
-if "Order_ID" in filtered_df.columns:
-    col3.metric(
-        "Unique Orders",
-        f"{filtered_df['Order_ID'].nunique():,}"
-    )
-else:
-    col3.metric("Missing Values", int(filtered_df.isna().sum().sum()))
+col3.metric(
+    "Unique Orders",
+    f"{filtered_df['Order_ID'].nunique():,}"
+)
+
+col4.metric(
+    "Total Sales",
+    f"{filtered_df['Total_Amount'].sum():,.2f}"
+)
 
 st.divider()
+
 
 # Charts
 left, right = st.columns(2)
