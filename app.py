@@ -178,6 +178,38 @@ with right:
         )
         st.plotly_chart(fig, use_container_width=True)
 
+
+
+# Key Findings
+st.subheader("💡 Key Findings")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    if not filtered_df.empty and "Product_Category" in filtered_df.columns:
+        popular_category = filtered_df["Product_Category"].mode()
+
+        if not popular_category.empty:
+            st.info(f"🛍️ Most common product category: **{popular_category.iloc[0]}**")
+
+    if not filtered_df.empty and "Payment_Method" in filtered_df.columns:
+        popular_payment = filtered_df["Payment_Method"].mode()
+
+        if not popular_payment.empty:
+            st.info(f"💳 Most-used payment method: **{popular_payment.iloc[0]}**")
+
+with col2:
+    if not filtered_df.empty and "City" in filtered_df.columns:
+        popular_city = filtered_df["City"].mode()
+
+        if not popular_city.empty:
+            st.info(f"📍 City with the most records: **{popular_city.iloc[0]}**")
+
+    if not filtered_df.empty and "Total_Amount" in filtered_df.columns:
+        average_order_value = filtered_df["Total_Amount"].mean()
+
+        st.info(f"💰 Average amount per record: **{average_order_value:,.2f}**")
+
 # Numeric summaries
 st.subheader("Numerical Summary")
 st.dataframe(
