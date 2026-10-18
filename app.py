@@ -79,6 +79,36 @@ col4.metric(
 st.divider()
 
 
+# Customer Rating Analysis
+st.subheader("⭐ Customer Rating Analysis")
+
+if "Customer_Rating" in filtered_df.columns:
+    rating_data = filtered_df.dropna(
+        subset=["Customer_Rating"]
+    )
+
+    rating_counts = (
+        rating_data["Customer_Rating"]
+        .value_counts()
+        .sort_index()
+        .reset_index()
+    )
+
+    rating_counts.columns = ["Rating", "Number of Records"]
+
+    fig = px.bar(
+        rating_counts,
+        x="Rating",
+        y="Number of Records",
+        title="Distribution of Customer Ratings",
+        text="Number of Records"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    average_rating = rating_data["Customer_Rating"].mean()
+    st.metric("Average Customer Rating", f"{average_rating:.2f}")
+
 
 # Returning Customer Analysis
 st.subheader("🔁 Returning Customer Analysis")
