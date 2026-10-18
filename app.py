@@ -78,6 +78,47 @@ col4.metric(
 
 st.divider()
 
+
+# Customer Age Group Analysis
+st.subheader("👥 Customer Age Group Analysis")
+
+if "Age" in filtered_df.columns:
+    age_data = filtered_df.dropna(subset=["Age"]).copy()
+
+    age_data["Age Group"] = pd.cut(
+        age_data["Age"],
+        bins=[0, 18, 25, 35, 45, 60, 100],
+        labels=[
+            "Under 18",
+            "18–25",
+            "26–35",
+            "36–45",
+            "46–60",
+            "Above 60"
+        ],
+        include_lowest=True
+    )
+
+    age_counts = (
+        age_data["Age Group"]
+        .value_counts(sort=False)
+        .reset_index()
+    )
+
+    age_counts.columns = ["Age Group", "Customer Records"]
+
+    fig = px.bar(
+        age_counts,
+        x="Age Group",
+        y="Customer Records",
+        title="Distribution of Records by Age Group",
+        text="Customer Records"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
+
 # Sales Trend Over Time
 st.subheader("📈 Sales Trend Over Time")
 
