@@ -17,7 +17,7 @@ st.write(
 
 @st.cache_data
 def load_data():
-    return pd.read_csv("ecommerce_customer_behavior_dataset_v2.csv")
+    return pd.read_csv("ecommerce_customer_behavior_dataset.csv")
 
 df = load_data()
 
