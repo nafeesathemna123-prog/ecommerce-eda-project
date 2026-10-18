@@ -78,6 +78,35 @@ col4.metric(
 
 st.divider()
 
+# Sales Trend Over Time
+st.subheader("📈 Sales Trend Over Time")
+
+if "Date" in filtered_df.columns and "Total_Amount" in filtered_df.columns:
+    sales_data = filtered_df.dropna(subset=["Date"]).copy()
+    sales_data["Date"] = pd.to_datetime(
+        sales_data["Date"], errors="coerce"
+    )
+    sales_data = sales_data.dropna(subset=["Date"])
+
+    if not sales_data.empty:
+        daily_sales = (
+            sales_data.groupby(sales_data["Date"].dt.date)["Total_Amount"]
+            .sum()
+            .reset_index()
+        )
+        daily_sales.columns = ["Date", "Total Sales"]
+
+        fig = px.line(
+            daily_sales,
+            x="Date",
+            y="Total Sales",
+            markers=True,
+            title="Daily Sales"
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("No valid dates available for the sales trend.")
+
 
 # Charts
 left, right = st.columns(2)
