@@ -79,6 +79,30 @@ col4.metric(
 st.divider()
 
 
+
+# Returning Customer Analysis
+st.subheader("🔁 Returning Customer Analysis")
+
+if "Is_Returning_Customer" in filtered_df.columns:
+    returning_counts = (
+        filtered_df["Is_Returning_Customer"]
+        .astype(str)
+        .value_counts()
+        .rename_axis("Customer Type")
+        .reset_index(name="Records")
+    )
+
+    fig = px.pie(
+        returning_counts,
+        names="Customer Type",
+        values="Records",
+        title="Returning vs Non-Returning Customer Records",
+        hole=0.4
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
 # Customer Age Group Analysis
 st.subheader("👥 Customer Age Group Analysis")
 
